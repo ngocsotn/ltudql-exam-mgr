@@ -1,0 +1,265 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ExamManagementDB" Class="QLDTDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="ConnectionString" ConnectionString="Data Source=GHOST8250\NGOC;Initial Catalog=ExamManagementDB;Integrated Security=True" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.ADMINISTRATORS" Member="ADMINISTRATORs">
+    <Type Name="ADMINISTRATOR">
+      <Column Name="PERSONALID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FULLNAME" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="GENDER" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="DATEOFBIRTH" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="ADMINONLYKEY" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="ADR" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Association Name="USERACCOUNT_ADMINISTRATOR" Member="USERACCOUNT" ThisKey="PERSONALID" OtherKey="PERSONALID" Type="USERACCOUNT" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TRAININGHISTORY" Member="TRAININGHISTORies">
+    <Type Name="TRAININGHISTORY">
+      <Column Name="TRAININGID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PERSONALID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TOPICID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TRAININGDATE" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="RESULT" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="OVERALLPROPERBILITY" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="TOTALCORRECT" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TOTALINCORRECT" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="TOPIC_TRAININGHISTORY" Member="TOPIC" ThisKey="TOPICID" OtherKey="TOPICID" Type="TOPIC" IsForeignKey="true" />
+      <Association Name="TRAINING_TRAININGHISTORY" Member="TRAINING" ThisKey="TRAININGID" OtherKey="TRAININGID" Type="TRAINING" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CLASSES" Member="CLASSes">
+    <Type Name="CLASS">
+      <Column Name="CLASSID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CLASSNAME" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="GRADEID" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="QUANTITY" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="CLASS_STUDENT" Member="STUDENTs" ThisKey="CLASSID" OtherKey="CLASSID" Type="STUDENT" />
+      <Association Name="CLASS_TEACHER" Member="TEACHERs" ThisKey="CLASSID" OtherKey="CLASSID" Type="TEACHER" />
+      <Association Name="GRADE_CLASS" Member="GRADE" ThisKey="GRADEID" OtherKey="GRADEID" Type="GRADE" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.EXAM" Member="EXAMs">
+    <Type Name="EXAM">
+      <Column Name="EXAMID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="SEMESTER" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="YEAROFSEMESTER" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TYPEOFEXAM" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="STATUSOFEXAM" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DATEOFEXAM" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Association Name="EXAM_EXAM_DETAIL" Member="EXAM_DETAILs" ThisKey="EXAMID" OtherKey="EXAMID" Type="EXAM_DETAIL" />
+      <Association Name="EXAM_PERCENTAGEOFQUESTION" Member="PERCENTAGEOFQUESTIONs" ThisKey="EXAMID" OtherKey="EXAMID" Type="PERCENTAGEOFQUESTION" />
+      <Association Name="EXAM_SCHEDULE" Member="SCHEDULEs" ThisKey="EXAMID" OtherKey="EXAMID" Type="SCHEDULE" />
+      <Association Name="SEMESTER_EXAM" Member="SEMESTER1" ThisKey="SEMESTER" OtherKey="SEMESTERID" Type="SEMESTER" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.EXAM_DETAILS" Member="EXAM_DETAILs">
+    <Type Name="EXAM_DETAIL">
+      <Column Name="EXAMID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PERSONALID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TOPICID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="EXAM_EXAM_DETAIL" Member="EXAM" ThisKey="EXAMID" OtherKey="EXAMID" Type="EXAM" IsForeignKey="true" />
+      <Association Name="TOPIC_EXAM_DETAIL" Member="TOPIC" ThisKey="TOPICID" OtherKey="TOPICID" Type="TOPIC" IsForeignKey="true" />
+      <Association Name="USERACCOUNT_EXAM_DETAIL" Member="USERACCOUNT" ThisKey="PERSONALID" OtherKey="PERSONALID" Type="USERACCOUNT" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.GRADE" Member="GRADEs">
+    <Type Name="GRADE">
+      <Column Name="GRADEID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="DISPLAYNAME" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Association Name="GRADE_CLASS" Member="CLASSes" ThisKey="GRADEID" OtherKey="GRADEID" Type="CLASS" />
+      <Association Name="GRADE_TOPIC" Member="TOPICs" ThisKey="GRADEID" OtherKey="GRADEID" Type="TOPIC" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PERCENTAGEOFQUESTION" Member="PERCENTAGEOFQUESTIONs">
+    <Type Name="PERCENTAGEOFQUESTION">
+      <Column Name="QUESTIONID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="EXAMID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TOTALCORRECT" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TOTALINCORRECT" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="EXAM_PERCENTAGEOFQUESTION" Member="EXAM" ThisKey="EXAMID" OtherKey="EXAMID" Type="EXAM" IsForeignKey="true" />
+      <Association Name="QUESTION_PERCENTAGEOFQUESTION" Member="QUESTION" ThisKey="QUESTIONID" OtherKey="QUESTIONID" Type="QUESTION" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PERMISSION" Member="PERMISSIONs">
+    <Type Name="PERMISSION">
+      <Column Name="PERMISSIONID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PERMISSIONNAME" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Association Name="PERMISSION_USERACCOUNT" Member="USERACCOUNTs" ThisKey="PERMISSIONID" OtherKey="USERLEVEL" Type="USERACCOUNT" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PROCESSES" Member="PROCESSes">
+    <Type Name="PROCESS">
+      <Column Name="TESTID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="QUESTIONID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CHOICE" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Association Name="QUESTION_PROCESS" Member="QUESTION" ThisKey="QUESTIONID" OtherKey="QUESTIONID" Type="QUESTION" IsForeignKey="true" />
+      <Association Name="TEST_PROCESS" Member="TEST" ThisKey="TESTID" OtherKey="TESTID" Type="TEST" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.QUESTION" Member="QUESTIONs">
+    <Type Name="QUESTION">
+      <Column Name="QUESTIONID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="GRADEID" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="SUBJECTID" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="CONTENTOFQUESTION" Type="System.String" DbType="NVarChar(3600) NOT NULL" CanBeNull="false" />
+      <Column Name="A" Type="System.String" DbType="NVarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="B" Type="System.String" DbType="NVarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="C" Type="System.String" DbType="NVarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="D" Type="System.String" DbType="NVarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="E" Type="System.String" DbType="NVarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="F" Type="System.String" DbType="NVarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="CORRECTANSWER" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="HINT" Type="System.String" DbType="NVarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="DIFFICULT" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ISPRO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="QUESTION_PERCENTAGEOFQUESTION" Member="PERCENTAGEOFQUESTIONs" ThisKey="QUESTIONID" OtherKey="QUESTIONID" Type="PERCENTAGEOFQUESTION" />
+      <Association Name="QUESTION_PROCESS" Member="PROCESSes" ThisKey="QUESTIONID" OtherKey="QUESTIONID" Type="PROCESS" />
+      <Association Name="QUESTION_QUESTIONSSTORAGE" Member="QUESTIONSSTORAGEs" ThisKey="QUESTIONID" OtherKey="QUESTIONID" Type="QUESTIONSSTORAGE" />
+      <Association Name="QUESTION_STATISTIC" Member="STATISTICs" ThisKey="QUESTIONID" OtherKey="QUESTIONID" Type="STATISTIC" />
+    </Type>
+  </Table>
+  <Table Name="dbo.QUESTIONSSTORAGE" Member="QUESTIONSSTORAGEs">
+    <Type Name="QUESTIONSSTORAGE">
+      <Column Name="PERSONALID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="QUESTIONID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="APPROVALSTATUS" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="QUESTION_QUESTIONSSTORAGE" Member="QUESTION" ThisKey="QUESTIONID" OtherKey="QUESTIONID" Type="QUESTION" IsForeignKey="true" />
+      <Association Name="USERACCOUNT_QUESTIONSSTORAGE" Member="USERACCOUNT" ThisKey="PERSONALID" OtherKey="PERSONALID" Type="USERACCOUNT" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.RESULTOFTEST" Member="RESULTOFTESTs">
+    <Type Name="RESULTOFTEST">
+      <Column Name="TESTID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TOTALCORRECT" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TOTALINCORRECT" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SCORE" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="PASSSTATUS" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Association Name="TEST_RESULTOFTEST" Member="TEST" ThisKey="TESTID" OtherKey="TESTID" Type="TEST" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SCHEDULE" Member="SCHEDULEs">
+    <Type Name="SCHEDULE">
+      <Column Name="PERSONALID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="EXAMID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="SUBJECTID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="DATEOFTEST" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="NAMEOFSUBJECT" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="PLACE" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Association Name="EXAM_SCHEDULE" Member="EXAM" ThisKey="EXAMID" OtherKey="EXAMID" Type="EXAM" IsForeignKey="true" />
+      <Association Name="SUBJECT_SCHEDULE" Member="SUBJECT" ThisKey="SUBJECTID" OtherKey="SUBJECTID" Type="SUBJECT" IsForeignKey="true" />
+      <Association Name="USERACCOUNT_SCHEDULE" Member="USERACCOUNT" ThisKey="PERSONALID" OtherKey="PERSONALID" Type="USERACCOUNT" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SEMESTER" Member="SEMESTERs">
+    <Type Name="SEMESTER">
+      <Column Name="SEMESTERID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="NAME" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Association Name="SEMESTER_EXAM" Member="EXAMs" ThisKey="SEMESTERID" OtherKey="SEMESTER" Type="EXAM" />
+    </Type>
+  </Table>
+  <Table Name="dbo.STATISTIC" Member="STATISTICs">
+    <Type Name="STATISTIC">
+      <Column Name="TESTID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="QUESTIONID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ISCORRECT" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="QUESTION_STATISTIC" Member="QUESTION" ThisKey="QUESTIONID" OtherKey="QUESTIONID" Type="QUESTION" IsForeignKey="true" />
+      <Association Name="TEST_STATISTIC" Member="TEST" ThisKey="TESTID" OtherKey="TESTID" Type="TEST" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.STUDENTS" Member="STUDENTs">
+    <Type Name="STUDENT">
+      <Column Name="PERSONALID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FULLNAME" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="GENDER" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="CLASSID" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="DATEOFBIRTH" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="ISPRO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ADR" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Association Name="CLASS_STUDENT" Member="CLASS" ThisKey="CLASSID" OtherKey="CLASSID" Type="CLASS" IsForeignKey="true" />
+      <Association Name="USERACCOUNT_STUDENT" Member="USERACCOUNT" ThisKey="PERSONALID" OtherKey="PERSONALID" Type="USERACCOUNT" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SUBJECTS" Member="SUBJECTs">
+    <Type Name="SUBJECT">
+      <Column Name="SUBJECTID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="SUBJECTNAME" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Association Name="SUBJECT_SCHEDULE" Member="SCHEDULEs" ThisKey="SUBJECTID" OtherKey="SUBJECTID" Type="SCHEDULE" />
+      <Association Name="SUBJECT_TOPIC" Member="TOPICs" ThisKey="SUBJECTID" OtherKey="SUBJECTID" Type="TOPIC" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TEACHERS" Member="TEACHERs">
+    <Type Name="TEACHER">
+      <Column Name="PERSONALID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FULLNAME" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="GENDER" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="CLASSID" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="SUBJECTID" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="DATEOFBIRTH" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="ADR" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Association Name="CLASS_TEACHER" Member="CLASS" ThisKey="CLASSID" OtherKey="CLASSID" Type="CLASS" IsForeignKey="true" />
+      <Association Name="USERACCOUNT_TEACHER" Member="USERACCOUNT" ThisKey="PERSONALID" OtherKey="PERSONALID" Type="USERACCOUNT" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TESTS" Member="TESTs">
+    <Type Name="TEST">
+      <Column Name="TESTID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PERSONALID" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="TOPICID" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="COMPLETESTATUS" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DATEOFTEST" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="TIMELEFT" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="TEST_PROCESS" Member="PROCESSes" ThisKey="TESTID" OtherKey="TESTID" Type="PROCESS" />
+      <Association Name="TEST_RESULTOFTEST" Member="RESULTOFTEST" ThisKey="TESTID" OtherKey="TESTID" Type="RESULTOFTEST" Cardinality="One" />
+      <Association Name="TEST_STATISTIC" Member="STATISTICs" ThisKey="TESTID" OtherKey="TESTID" Type="STATISTIC" />
+      <Association Name="TOPIC_TEST" Member="TOPIC" ThisKey="TOPICID" OtherKey="TOPICID" Type="TOPIC" IsForeignKey="true" />
+      <Association Name="USERACCOUNT_TEST" Member="USERACCOUNT" ThisKey="PERSONALID" OtherKey="PERSONALID" Type="USERACCOUNT" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TOPIC" Member="TOPICs">
+    <Type Name="TOPIC">
+      <Column Name="TOPICID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="SUBJECTID" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="GRADEID" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="TOTALTIME" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="TOPIC_TRAININGHISTORY" Member="TRAININGHISTORies" ThisKey="TOPICID" OtherKey="TOPICID" Type="TRAININGHISTORY" />
+      <Association Name="TOPIC_EXAM_DETAIL" Member="EXAM_DETAILs" ThisKey="TOPICID" OtherKey="TOPICID" Type="EXAM_DETAIL" />
+      <Association Name="TOPIC_TEST" Member="TESTs" ThisKey="TOPICID" OtherKey="TOPICID" Type="TEST" />
+      <Association Name="TOPIC_TOPIC_DETAIL" Member="TOPIC_DETAILs" ThisKey="TOPICID" OtherKey="TOPICID" Type="TOPIC_DETAIL" />
+      <Association Name="GRADE_TOPIC" Member="GRADE" ThisKey="GRADEID" OtherKey="GRADEID" Type="GRADE" IsForeignKey="true" />
+      <Association Name="SUBJECT_TOPIC" Member="SUBJECT" ThisKey="SUBJECTID" OtherKey="SUBJECTID" Type="SUBJECT" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TOPIC_DETAILS" Member="TOPIC_DETAILs">
+    <Type Name="TOPIC_DETAIL">
+      <Column Name="TOPICID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="QUESTIONID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="NOTES" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Association Name="TOPIC_TOPIC_DETAIL" Member="TOPIC" ThisKey="TOPICID" OtherKey="TOPICID" Type="TOPIC" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TRAINING" Member="TRAININGs">
+    <Type Name="TRAINING">
+      <Column Name="TRAININGID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PERSONALID" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="OVERALLPROPERBILITY" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="TOTALCOMPLETED" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="TRAINING_TRAININGHISTORY" Member="TRAININGHISTORies" ThisKey="TRAININGID" OtherKey="TRAININGID" Type="TRAININGHISTORY" />
+      <Association Name="USERACCOUNT_TRAINING" Member="USERACCOUNT" ThisKey="PERSONALID" OtherKey="PERSONALID" Type="USERACCOUNT" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.USERACCOUNTS" Member="USERACCOUNTs">
+    <Type Name="USERACCOUNT">
+      <Column Name="PERSONALID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PASS" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="USERLEVEL" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EMAIL" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="USERACCOUNT_ADMINISTRATOR" Member="ADMINISTRATOR" ThisKey="PERSONALID" OtherKey="PERSONALID" Type="ADMINISTRATOR" Cardinality="One" />
+      <Association Name="USERACCOUNT_EXAM_DETAIL" Member="EXAM_DETAILs" ThisKey="PERSONALID" OtherKey="PERSONALID" Type="EXAM_DETAIL" />
+      <Association Name="USERACCOUNT_QUESTIONSSTORAGE" Member="QUESTIONSSTORAGEs" ThisKey="PERSONALID" OtherKey="PERSONALID" Type="QUESTIONSSTORAGE" />
+      <Association Name="USERACCOUNT_SCHEDULE" Member="SCHEDULEs" ThisKey="PERSONALID" OtherKey="PERSONALID" Type="SCHEDULE" />
+      <Association Name="USERACCOUNT_STUDENT" Member="STUDENT" ThisKey="PERSONALID" OtherKey="PERSONALID" Type="STUDENT" Cardinality="One" />
+      <Association Name="USERACCOUNT_TEACHER" Member="TEACHER" ThisKey="PERSONALID" OtherKey="PERSONALID" Type="TEACHER" Cardinality="One" />
+      <Association Name="USERACCOUNT_TEST" Member="TESTs" ThisKey="PERSONALID" OtherKey="PERSONALID" Type="TEST" />
+      <Association Name="USERACCOUNT_TRAINING" Member="TRAININGs" ThisKey="PERSONALID" OtherKey="PERSONALID" Type="TRAINING" />
+      <Association Name="PERMISSION_USERACCOUNT" Member="PERMISSION" ThisKey="USERLEVEL" OtherKey="PERMISSIONID" Type="PERMISSION" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
